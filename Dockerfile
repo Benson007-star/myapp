@@ -18,7 +18,7 @@ RUN npm install
 COPY . .
 
 # Build Angular app
-RUN npm run build --configuration=production
+RUN npx ng build --configuration=production
 
 # =========================
 # Stage 2 - Nginx Server
@@ -32,10 +32,10 @@ RUN rm -rf /usr/share/nginx/html/*
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copy Angular build files
-COPY --from=build /app/dist/my-app /usr/share/nginx/html
+COPY --from=build /app/dist/my-app/browser /usr/share/nginx/html
 
 # Expose port
-EXPOSE 80
+EXPOSE 10000
 
 # Start nginx
 CMD ["nginx", "-g", "daemon off;"]
